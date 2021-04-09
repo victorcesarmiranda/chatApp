@@ -1,44 +1,67 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context="activities.Mensagens">
+             xmlns:tools="http://schemas.android.com/tools"
+             android:layout_width="match_parent"
+             android:layout_height="match_parent"
+             android:id="@+id/frameMensagem"
+             tools:context=".activities.Mensagens">
 
-    <!-- TODO: Update blank fragment layout -->
     <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
-        <TextView
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/txtDestinatario"/>
+            android:layout_height="match_parent"
+            android:orientation="vertical">
 
-        <EditText
-            android:id="@+id/edtMensagens"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:ems="10"
-            android:gravity="start|top"
-            android:inputType="textMultiLine"
-            android:editable="false"/>
         <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
-            <Button
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/btEnviar"
-                android:text="Enviar"/>
-            <EditText
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:id="@+id/edtNovaMensagem"/>
+                android:orientation="horizontal"
+                android:layout_gravity="top"
+                android:id="@+id/linearLayout2">
+            <Button
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="0.5"
+                    android:text="@string/label_voltar"
+                    android:id="@+id/botaoVoltar" android:background="#774df2" android:backgroundTint="#774df2"
+                    android:textSize="24sp" android:textColor="#FFFFFF" android:textStyle="bold"/>
+
+            <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="3"
+                    android:id="@+id/nomeDestino"
+                    android:textSize="24sp"
+                    android:background="#774df2" android:textColor="#FFFFFF"
+                    android:gravity="fill"
+                    tools:text="@tools:sample/full_names" android:textStyle="bold" android:paddingHorizontal="20dp"/>
+        </LinearLayout>
+        <ListView
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:id="@+id/listaMensagem"
+                android:divider="@null"
+                android:dividerHeight="0dp"/>
+        <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_gravity="bottom"
+                android:id="@+id/linearLayout">
+            <EditText
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="3"
+                    android:hint="Digite aqui"
+                    android:id="@+id/edtNovaMensagem"/>
+            <Button
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:id="@+id/botaoEnviar"
+                    android:text="Enviar"/>
         </LinearLayout>
     </LinearLayout>
-
 
 
 </FrameLayout>

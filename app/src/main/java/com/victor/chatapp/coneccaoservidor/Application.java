@@ -4,16 +4,14 @@ import android.util.Log;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.util.List;
+import java.util.*;
 
 public class Application implements MensagemListener {
 
     private static final Application instancia = new Application();
-    public static Application getInstance() {return instancia;}
-
-    private Comunicador comunicador;
-
+    private final Comunicador comunicador;
     private int currentFragmentPosition;
+
 
     private Application() {
         currentFragmentPosition = 1;
@@ -22,8 +20,11 @@ public class Application implements MensagemListener {
         Interpretador.getInstance().addObservador(this);
     }
 
+    public static Application getInstance() {
+        return instancia;
+    }
+
     /**
-     *
      * @param userId
      */
     public void enviarMensagemLogin(String userId) throws JSONException {
@@ -31,14 +32,28 @@ public class Application implements MensagemListener {
         JSONObject userInfo = new JSONObject();
         userInfo.put("user-id", userId);
         login.put("login", userInfo);
-        // { "login": { "user-id":"o.professor" } }
-        String header = "{ \"login\": { \"user-id\":\"";
-        String tail   = "\" } }";
-        String mensagem = header + userId + tail;
-        //Atualizando o id do Usuario.
         Usuario.getInstance().setUserId(userId);
-       comunicador.enfileraMensagem(login.toString());
+        comunicador.enfileraMensagem(login.toString());
     }
+
+    public void enviarMensagemLogout(String userId) throws JSONException {
+        JSONObject logout = new JSONObject();
+        JSONObject userInfo = new JSONObject();
+        userInfo.put("user-id", userId);
+        logout.put("logout", userInfo);
+        comunicador.enfileraMensagem(logout.toString());
+    }
+
+    public void enviarMensagemTexto(String sender, String receiver, String content) throws JSONException {
+        JSONObject message = new JSONObject();
+        JSONObject messageInfo = new JSONObject();
+        messageInfo.put("sender", sender);
+        messageInfo.put("receiver", receiver);
+        messageInfo.put("content", content);
+        message.put("message", messageInfo);
+        comunicador.enfileraMensagem(message.toString());
+    }
+
 
     @Override
     public void onListaDeUsuariosChegando(List<String> usuarios) {
@@ -48,7 +63,7 @@ public class Application implements MensagemListener {
 
     @Override
     public void onMensagemChegando(String remetente, String texto) {
-
+        ListaMensagens.setNovaMensagem(remetente, texto);
     }
 
     @Override

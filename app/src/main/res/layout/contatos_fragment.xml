@@ -1,19 +1,37 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".activities.Contatos"
-    android:orientation="vertical">
+              xmlns:tools="http://schemas.android.com/tools"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              tools:context=".activities.Contatos"
+              android:orientation="vertical">
+    <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_gravity="top"
+            android:id="@+id/linearLayout2">
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Lista de contatos..." />
+        <TextView
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:text="Lista de Contatos:" android:id="@+id/textListaContato" android:textSize="24sp"
+                android:background="#774df2" android:textColor="#FFFFFF"
+                android:layout_weight="3"
+                android:gravity="fill" android:textStyle="bold" android:paddingHorizontal="20dp"/>
+        <Button
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:text="Logout"
+                android:id="@+id/botaoLogout" android:background="#774df2" android:backgroundTint="#774df2"
+                android:textSize="14sp" android:textColor="#FFFFFF" android:textStyle="bold"
+                style="@style/Widget.AppCompat.Button"/>
+    </LinearLayout>
 
     <ListView
-        android:id="@+id/listaContatos"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+            android:id="@+id/listaContatos"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
 
 </LinearLayout>

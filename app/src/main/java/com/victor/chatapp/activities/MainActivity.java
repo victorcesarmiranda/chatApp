@@ -14,7 +14,7 @@ import com.victor.chatapp.coneccaoservidor.ListaUsuarios;
 public class MainActivity extends AppCompatActivity {
 
     private ViewPager2 viewPager;
-
+    FragmentStateAdapter pagerAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -22,22 +22,14 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         //
         viewPager = findViewById(R.id.pager);
-        FragmentStateAdapter pagerAdapter = new ScreenSlidePagerAdapter(this);
+        pagerAdapter = new ScreenSlidePagerAdapter(this);
         viewPager.setAdapter(pagerAdapter);
     }
 
-//    public void onBackPressed() {
-//        if (viewPager.getCurrentItem() == 0) {
-//            super.onBackPressed();
-//        } else {
-//            viewPager.setCurrentItem(viewPager.getCurrentItem() - 1);
-//        }
-//    }
-
     private class ScreenSlidePagerAdapter extends FragmentStateAdapter {
 
-        Login fragLogin     = new Login();
-        Contatos contatos   = new Contatos();
+        Login fragLogin = new Login();
+        Contatos contatos = new Contatos();
         Mensagens mensagens = new Mensagens();
 
         public ScreenSlidePagerAdapter(FragmentActivity fa) {
@@ -60,10 +52,10 @@ public class MainActivity extends AppCompatActivity {
 
         @Override
         public Fragment createFragment(int position) {
-            if(position == 0) {
+            if (position == 0) {
                 return fragLogin;
             }
-            if((position == 1) && (viewPager.getCurrentItem() != 2)){
+            if ((position == 1) && (viewPager.getCurrentItem() != 2)) {
                 return contatos;
             }
             if(position == 2) {
@@ -71,6 +63,10 @@ public class MainActivity extends AppCompatActivity {
             }
 
             return null;
+        }
+
+        public Mensagens getMensagens() {
+            return new Mensagens();
         }
 
         @Override

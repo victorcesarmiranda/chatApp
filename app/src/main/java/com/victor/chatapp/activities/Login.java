@@ -11,6 +11,8 @@ import com.victor.chatapp.R;
 import com.victor.chatapp.coneccaoservidor.Application;
 import org.json.JSONException;
 
+import java.util.Objects;
+
 /**
  * A simple {@link Fragment} subclass.
  * Use the {@link Login#newInstance} factory method to
@@ -46,22 +48,17 @@ public class Login extends Fragment {
     @Override
     public void onStart() {
         super.onStart();
-        Button botaoEnviar = getActivity().findViewById(R.id.botaoEnviar);
+        Button botaoEnviar = Objects.requireNonNull(getActivity()).findViewById(R.id.botaoEntrar);
         final EditText edtUserId = getActivity().findViewById(R.id.username);
         botaoEnviar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Thread r = new Thread() {
-                    @Override
-                    public void run() {
-                        try {
-                            Application.getInstance().enviarMensagemLogin(edtUserId.getText().toString());
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        }
-                    }
-                };
-                r.start();
+                try {
+                    Application.getInstance().enviarMensagemLogin(edtUserId.getText().toString());
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+                Application.getInstance().setCurrentFragmentPosition(1);
             }
         });
     }

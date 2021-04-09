@@ -9,7 +9,7 @@ package com.victor.chatapp.coneccaoservidor;
  *
  */
 public interface ComunicadorListener {
-    
+
     void onMenssagemChegandoDoServidor(String message);
-    
+
 }

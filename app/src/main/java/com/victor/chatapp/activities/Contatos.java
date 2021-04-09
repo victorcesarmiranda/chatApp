@@ -4,10 +4,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.BaseAdapter;
-import android.widget.ListView;
-import android.widget.TextView;
+import android.widget.*;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.databinding.Observable;
@@ -16,15 +13,18 @@ import androidx.fragment.app.Fragment;
 import com.victor.chatapp.R;
 import com.victor.chatapp.coneccaoservidor.Application;
 import com.victor.chatapp.coneccaoservidor.ListaUsuarios;
+import com.victor.chatapp.coneccaoservidor.Usuario;
+import org.json.JSONException;
 
 import java.util.List;
+import java.util.Objects;
 
 public class Contatos extends Fragment {
 
     List<String> lista;
-    MyAdapter myAdapter;
+    ContatoAdapter contatoAdapter;
 
-    public Contatos () {
+    public Contatos() {
         super();
     }
 
@@ -37,14 +37,27 @@ public class Contatos extends Fragment {
     @Override
     public void onStart() {
         super.onStart();
-        ListView listaContato = getActivity().findViewById(R.id.listaContatos);
-        myAdapter = new MyAdapter();
-        listaContato.setAdapter(myAdapter);
+        final ListView listaContato = Objects.requireNonNull(getActivity()).findViewById(R.id.listaContatos);
+        contatoAdapter = new ContatoAdapter();
+        listaContato.setAdapter(contatoAdapter);
 
         listaContato.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Application.getInstance().setCurrentFragmentPosition(2);
+                Usuario.getInstance().setCurrentContact(contatoAdapter.getItem(position).toString());
+            }
+        });
+        Button botaoLogout = Objects.requireNonNull(getActivity()).findViewById(R.id.botaoLogout);
+        botaoLogout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                try {
+                    Application.getInstance().enviarMensagemLogout(Usuario.getInstance().getUserId());
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+                Application.getInstance().setCurrentFragmentPosition(0);
             }
         });
         ListaUsuarios.getListaDeUsuarios().addOnPropertyChangedCallback(new Observable.OnPropertyChangedCallback() {
@@ -53,14 +66,13 @@ public class Contatos extends Fragment {
                 Runnable r = new Runnable() {
                     @Override
                     public void run() {
-                        lista = ((ObservableField<List<String>>)sender).get();
-                        myAdapter.notifyDataSetChanged();
+                        lista = ((ObservableField<List<String>>) sender).get();
+                        contatoAdapter.notifyDataSetChanged();
                     }
                 };
-                getActivity().runOnUiThread(r);
+                Objects.requireNonNull(getActivity()).runOnUiThread(r);
             }
         });
-
     }
 
     @Override
@@ -68,23 +80,23 @@ public class Contatos extends Fragment {
         super.onActivityCreated(savedInstanceState);
     }
 
-    class MyAdapter extends BaseAdapter {
+    class ContatoAdapter extends BaseAdapter {
 
         @Override
         public int getCount() {
-            if(lista != null) return lista.size();
+            if (lista != null) return lista.size();
             return 0;
         }
 
         @Override
         public Object getItem(int i) {
-            if(lista != null) return lista.get(i);
+            if (lista != null) return lista.get(i);
             return null;
         }
 
         @Override
         public long getItemId(int i) {
-            return 0;
+            return i;
         }
 
         @Override
@@ -92,10 +104,10 @@ public class Contatos extends Fragment {
             if (view == null) {
                 view = getLayoutInflater().inflate(R.layout.linha_usuario, container, false);
             }
-            if(lista != null) {
+            if (lista != null) {
                 String contato = lista.get(position);
 
-                ((TextView) view.findViewById(R.id.txtHorario)).setText("- ");
+                ((TextView) view.findViewById(R.id.marcador)).setText("- ");
                 ((TextView) view.findViewById(R.id.txtUserName)).setText(contato);
             }
 

@@ -22,17 +22,15 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
- *
  * @author old_adam
  */
 public class Comunicador {
-    private Socket socket;
-
-    private Timer timer = new Timer();
+    private final Timer timer = new Timer();
     private final TimerTask taskComunicacao;
     //
     private final ArrayList<ComunicadorListener> listaDeObservadores = new ArrayList<>(1);
     private final ArrayList<String> filaDeMensagens = new ArrayList(1);
+    private Socket socket;
 
     public Comunicador() {
         taskComunicacao = new TimerTask() {
@@ -42,15 +40,14 @@ public class Comunicador {
                 if (filaDeMensagens.size() > 0) {
                     falaComOServidor(filaDeMensagens.get(0));
                     filaDeMensagens.remove(0);
-                }
-                else {
+                } else {
                     String msg = null;
                     try {
                         msg = buildMensagemDePing();
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
-                    if(msg != null)
+                    if (msg != null)
                         falaComOServidor(msg);
                 }
             }
@@ -66,15 +63,17 @@ public class Comunicador {
     public void removeListener(ComunicadorListener observador) {
         listaDeObservadores.remove(observador);
     }
+
     /**
-     *
      * @param mensagem
      */
     public synchronized void enfileraMensagem(String mensagem) {
         filaDeMensagens.add(mensagem);
     }
+
     /**
      * Metodo que controe a mensagem de ping.
+     *
      * @return
      */
     private String buildMensagemDePing() throws JSONException {
@@ -84,9 +83,6 @@ public class Comunicador {
             JSONObject userInfo = new JSONObject();
             userInfo.put("user-id", userId);
             ping.put("ping", userInfo);
-            String header = "{ \"ping\": { \"user-id\":\"";
-            String tail = "\" } }";
-
             return ping.toString();
         } else {
             return null;
@@ -94,7 +90,7 @@ public class Comunicador {
     }
 
     private void falaComOServidor(String mensagem) {
-        try{
+        try {
             //abrindo o socket com o servidor.
             socket = new Socket("192.168.15.8", 1408);
             //
@@ -102,7 +98,7 @@ public class Comunicador {
             ps.println(mensagem);
             //
 
-            String feedback = new String();
+            String feedback = "";
             System.out.println("antes de ler.");
             //Reading back
             try {
@@ -114,17 +110,17 @@ public class Comunicador {
                 socket.close();
                 socket = null;
                 //Chamar um observador/listener
-                for(ComunicadorListener observador : listaDeObservadores) {
-                    try{
+                for (ComunicadorListener observador : listaDeObservadores) {
+                    try {
                         observador.onMenssagemChegandoDoServidor(feedback);
-                    } catch(JsonSyntaxException e) {}
+                    } catch (JsonSyntaxException e) {
+                    }
                 }
 
             } catch (IOException ex) {
                 Logger.getLogger(Comunicador.class.getName()).log(Level.SEVERE, null, ex);
             }
-        }
-        catch(IOException e) {
+        } catch (IOException e) {
             System.out.println("Erro ao enviar msg: " + e.getMessage());
         }
     }

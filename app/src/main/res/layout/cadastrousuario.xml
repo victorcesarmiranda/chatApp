@@ -18,27 +18,13 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.523" />
 
-    <EditText
-        android:id="@+id/servidor"
-        android:layout_width="340dp"
-        android:layout_height="55dp"
-        android:fontFamily="sans-serif"
-        android:hint="Servidor"
-        android:inputType="textPassword"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.507"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/username"
-        app:layout_constraintVertical_bias="0.0" />
-
     <Button
-        android:id="@+id/botaoEnviar"
+        android:id="@+id/botaoEntrar"
         android:layout_width="340dp"
         android:layout_height="55dp"
         android:layout_marginBottom="28dp"
-        android:background="#194C80"
-        android:backgroundTint="#194C80"
+        android:background="#774df2"
+        android:backgroundTint="#774df2"
         android:text="ENTRAR"
         android:textColor="#FFFFFF"
         app:layout_constraintBottom_toBottomOf="parent"

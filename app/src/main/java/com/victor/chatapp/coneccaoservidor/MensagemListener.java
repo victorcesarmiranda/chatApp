@@ -9,13 +9,14 @@ import java.util.List;
 
 
 /**
- *
  * @author old_adam
  */
 public interface MensagemListener {
-    
+
     void onListaDeUsuariosChegando(List<String> usuarios);
+
     void onMensagemChegando(String remetente, String texto);
+
     void onMensagemDeErroChegando(String motivo);
-    
+
 }

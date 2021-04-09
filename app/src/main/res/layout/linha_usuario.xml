@@ -1,16 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="horizontal"
-    android:layout_margin="10dp">
+              xmlns:app="http://schemas.android.com/apk/res-auto" xmlns:tools="http://schemas.android.com/tools"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:orientation="horizontal"
+              android:layout_margin="10dp" android:paddingVertical="30dp">
     <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/txtHorario"/>
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/marcador" android:textStyle="bold" style="@android:style/Widget.Holo.Light.TextView"
+            android:textSize="24sp" android:paddingHorizontal="10dp"/>
     <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/txtUserName"/>
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+            android:id="@+id/txtUserName" android:textSize="24sp" tools:text="@tools:sample/full_names"
+            android:ellipsize="start" android:autoSizeTextType="none"
+            style="@android:style/Widget.Holo.TextView" android:textColor="#B0000000" android:textStyle="bold"/>
 
 </LinearLayout>
